@@ -1,0 +1,77 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+
+<div class="row g-5">
+    <class="col-md-8">
+      <article class="blog-post">
+        {% if post.img %}
+        <div>
+          <img src="{{ post.img.url }}" alt="">
+        </div>
+        {% endif %}
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <p class="blog-post-meta">{{ post.publish }}<a href="#">{{ post.author }}</a></p>
+        <p id="likes-count">
+          {{ likes.count }}Likes
+          {% if request.user.is_authenticated %}
+          <button id="like-button">
+            <i class="bi bi-heart-fill"></i>
+          </button>
+          {% endif %}
+        </p>
+        <hr>   
+        <p>
+           {{ post.body }}
+        </p>
+        {% if comments %}
+        <h5>Comments:💬</h5>
+        {% for comment in comments %}
+        <p>
+            {{ comment.author.username }}: {{ comment.text }}
+        </p>
+        {% endfor %}
+        <br><br>
+        {% endif %}
+      </article>
+      {% if request.user.is_authenticated %}
+    <div class="container">
+        <form method="post" action="">
+          {% csrf_token %}
+          {{ comment_form }}
+
+          <button type="submit">Jo'natish⏭</button>
+        </form>
+    </div>
+    {% endif %}
+      <nav class="blog-pagination mb-5" aria-label="Pagenation">
+        <a class="btn btn-outline-primary" href="{% url 'blog:post_list' %}">Orqaga</a>
+      </nav>
+
+    </div>
+  </div>
+
+
+<script>
+  document.addEventListener('DOMCconteneLoaded',  ()=> {
+      const likeButton = document.getElementById('like-button');
+      const likeCount = document.getElementById('likes-count');
+
+        likeButton.addEventListener('click', function () {
+        fetch('{% url "blog:like_post" post.id %}', {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}',
+         },
+       })
+
+            .then(response => response.json())
+            .then(data => {
+                likeCount.textContent = data.like_count + ' Likes';
+          });
+    });
+  });
+</script>
+
+
+{% endblock %}

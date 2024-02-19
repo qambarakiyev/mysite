@@ -1,0 +1,68 @@
+{% extends "blog/base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+
+<main class="form-signin">
+    <div class="container py-5 px-5"></div>
+      <div class="row g-5">
+          <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Ro'yxatdan o'tish✔</h4>
+        <form class="needs-validation" novalidate="" method="post">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Ism✔</label>
+              {% csrf_token %}
+              {{form.first_name}}
+              <div class="invalid-feedback">
+                ismni kiriting✔
+              </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 pt-5">
+              <label for="lastName" class="form-label">Familiya✔</label>
+              {% csrf_token %}
+              {{form.last_name}}
+              <div class="invalid-feedback">
+                Familiyangizni kiriting✔
+              </div>
+            </div>
+
+            <div class="col-12 pt-5">
+              <label for="username" class="form-label">Username✔</label>
+              {% csrf_token %}
+              <div class="input-group has-validation">
+                {{form.username }}
+                <span class="input-group-text">@</span>
+                  Usernameni kiriting✔
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 pt-1">
+              <label for="email" class="form-label">Parol✔<span class="text-muted">(Optional)</span></label>
+              {% csrf_token %}
+              {{form.password1}}
+              <div class="invalid-feedback">
+                Parolni kiriting✔
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Parolni Tasdiqlang✔</label>
+              {% csrf_token %}
+              {{form.password2}}
+              <div class="invalid-feedback">
+               Parolni tasdiqlang✔
+              </div>
+            </div>
+          </div>
+
+          <button class="w-100 btn btn-primary btn-lg mt-5" type="submit">Jonatish⏭</button>
+        </form>
+        </div>
+      </div>
+    </div>
+</main>
+
+{% endblock %}
