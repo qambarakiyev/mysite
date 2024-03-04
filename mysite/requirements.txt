@@ -1,0 +1,4 @@
+Django
+Pillow
+psycobg2-binary==2.9.9
+pip install whitenoise
